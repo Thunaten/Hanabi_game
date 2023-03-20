@@ -72,9 +72,17 @@ namespace Hanabi_game
 
         public void PlayerDraw()
         {
+            if (_cardsInHand.Count < 5)
+            {
             _gameDeck.DrawCard(_cardsInHand);
             _gameDeck.ShowState();
             ShowHand();
+            }
+            else
+            {
+                Console.SetCursorPosition(57, 17);
+                Console.Write("Вы не можете взять больше карт");
+            }
         }
 
         public Card PlayCard(int cardInHandNumber)
@@ -124,6 +132,8 @@ namespace Hanabi_game
             }
             if (_cursorCurrentPosition == _cursorPositionY)
             {
+                Console.SetCursorPosition(57, 17);
+                Console.Write("                           ");
                 PlayerDraw();
                 Console.SetCursorPosition(36, 20);
             } else if (_cursorCurrentPosition == _cursorPositionY + 1)
@@ -268,6 +278,16 @@ namespace Hanabi_game
         public Table()
         {
             Console.OutputEncoding = Encoding.UTF8;
+            Console.SetCursorPosition(0, 1);
+            Console.Write("Правила:" +
+                "\nВаша цель заполнить стол разыгрывая карты" +
+                "\nКарта имеет цвет(R,W,B,Y,G) и числовое значение (1-5)" +
+                "\nПри разыгрывании карта оказывается на столе в двух случаях:" +
+                "\n- если её значение 1 и нет другой карты того же цвета" +
+                "\n- если её значение на еденицу больше последней карты того же лежащей на столе." +
+                "\nВ противном случае карта сбрасывается. Предел карт на руке: 5." +
+                "\nБудьте осторожны, карт с большими значениями меньше, чем с низкими. Удачи.");
+
             for (int i = 10; i < 15; i++)
             {
                 Console.SetCursorPosition(40, i);
@@ -323,7 +343,7 @@ namespace Hanabi_game
                 {
                     Console.SetCursorPosition(40, 22);
                     Console.WriteLine("                                                                                        ");
-                    Console.SetCursorPosition(90, _dropCardCounter + 1);
+                    Console.SetCursorPosition(105, _dropCardCounter + 1);
                     Console.Write(_activeCard.FullCardValue);
                     _dropCardCounter++;
                     _cardWasPlayed = true;
