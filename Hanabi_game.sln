@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hanabi_game", "Hanabi_game\Hanabi_game.csproj", "{10DFC9D5-1188-409C-936C-46C094D2F998}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{10DFC9D5-1188-409C-936C-46C094D2F998}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10DFC9D5-1188-409C-936C-46C094D2F998}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10DFC9D5-1188-409C-936C-46C094D2F998}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10DFC9D5-1188-409C-936C-46C094D2F998}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D25275EE-5D7C-42CD-B7AE-40821CA3556B}
+	EndGlobalSection
+EndGlobal
