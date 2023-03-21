@@ -7,25 +7,32 @@ namespace Hanabi_game
     class Player
     {
         public int HandSize { get; private set; } = 5;
-        private List<Card> _cardsInHand = new List<Card>();
+        public List<Card> cardsInHand = new List<Card>();
         private Card _activeCard;
         public int activeCardNumber;
         private int _cursorPositionX;
         private int _cursorPositionY;
         private int _cursorCurrentPosition;
+        private readonly int _sizeFullCardValue = 3; //FullCardValue + " "
+        private readonly int _firstCardInHandPosition = 41;
 
         public void StartPlay(Deck deck)
         {
             Console.SetCursorPosition(0, 0);
             Console.WriteLine("Игра началась!");
+
             Console.ReadKey();
-            while (_cardsInHand.Count < HandSize)
+
+            while (cardsInHand.Count < HandSize)
             {
-                deck.DrawCard(_cardsInHand);
+                deck.DrawCard(cardsInHand);
             }
+
             deck.ShowState();
+
             Console.SetCursorPosition(40, 16);
             Console.Write("Карты на руке:");
+
             ShowHand();
         }
 
@@ -34,7 +41,8 @@ namespace Hanabi_game
             Console.SetCursorPosition(40, 17);
             Console.Write("                                                  ");
             Console.SetCursorPosition(40, 17);
-            foreach (Card cardInHand in _cardsInHand)
+
+            foreach (Card cardInHand in cardsInHand)
             {
                 Console.Write(cardInHand.FullCardValue + " ");
             }
@@ -42,10 +50,12 @@ namespace Hanabi_game
 
         public void PlayerDraw(Deck deck)
         {
-            if (_cardsInHand.Count < 5)
+            if (cardsInHand.Count < 5)
             {
-                deck.DrawCard(_cardsInHand);
+                deck.DrawCard(cardsInHand);
+
                 deck.ShowState();
+
                 ShowHand();
             }
             else
@@ -57,11 +67,14 @@ namespace Hanabi_game
 
         public Card PlayCard(int cardInHandNumber)
         {
-            if (_cardsInHand.Count > 0 && cardInHandNumber <= _cardsInHand.Count && cardInHandNumber > 0)
+            if (cardsInHand.Count > 0 && cardInHandNumber <= cardsInHand.Count && cardInHandNumber > 0)
             {
-                _activeCard = _cardsInHand[cardInHandNumber - 1];
-                _cardsInHand.RemoveAt(cardInHandNumber - 1);
+                _activeCard = cardsInHand[cardInHandNumber - 1];
+
+                cardsInHand.RemoveAt(cardInHandNumber - 1);
+
                 ShowHand();
+
                 return _activeCard;
             }
             else
@@ -72,15 +85,19 @@ namespace Hanabi_game
         {
             Console.SetCursorPosition(36, 19);
             Console.Write("Выберете действие:");
+
             Console.SetCursorPosition(36, 20);
             _cursorPositionY = Console.CursorTop;
             _cursorCurrentPosition = Console.CursorTop;
             Console.Write("Взять карту");
+
             Console.SetCursorPosition(36, 21);
             Console.Write("Сыграть карту");
+
             Console.SetCursorPosition(36, 20);
             Console.CursorSize = 100;
             ConsoleKey keyY;
+
             while ((keyY = Console.ReadKey(true).Key) != ConsoleKey.Enter)
             {
                 if (keyY == ConsoleKey.UpArrow)
@@ -104,37 +121,39 @@ namespace Hanabi_game
             {
                 Console.SetCursorPosition(57, 17);
                 Console.Write("                           ");
+
                 PlayerDraw(deck);
                 Console.SetCursorPosition(36, 20);
             } 
             else if (_cursorCurrentPosition == _cursorPositionY + 1)
             {
-                Console.SetCursorPosition(41, 17);
+                Console.SetCursorPosition(_firstCardInHandPosition, 17);
                 _cursorPositionX = Console.CursorLeft;
                 _cursorCurrentPosition = Console.CursorLeft;
                 ConsoleKey keyX;
+
                 while ((keyX = Console.ReadKey(true).Key) != ConsoleKey.Enter)
                 {
                     if (keyX == ConsoleKey.LeftArrow)
                     {
                         if (_cursorCurrentPosition > _cursorPositionX)
                         {
-                            _cursorCurrentPosition = _cursorCurrentPosition - 3;
+                            _cursorCurrentPosition = _cursorCurrentPosition - _sizeFullCardValue;
                             Console.CursorLeft = _cursorCurrentPosition;
                         }
                     }
                     else if (keyX == ConsoleKey.RightArrow)
                     {
-                        if (_cursorCurrentPosition < _cursorPositionX + (_cardsInHand.Count - 1)*3)
+                        if (_cursorCurrentPosition < _cursorPositionX + (cardsInHand.Count - 1)*_sizeFullCardValue)
                         {
-                            _cursorCurrentPosition = _cursorCurrentPosition + 3;
+                            _cursorCurrentPosition = _cursorCurrentPosition + _sizeFullCardValue;
                             Console.CursorLeft = _cursorCurrentPosition;
                         }
                     }
                 }
-                if (_cardsInHand.Count != 0)
+                if (cardsInHand.Count != 0)
                 {
-                    activeCardNumber = (((_cursorCurrentPosition - 41) / 3) + 1);
+                    activeCardNumber = (((_cursorCurrentPosition - _firstCardInHandPosition) / _sizeFullCardValue) + 1);
                     table.PlayOnTable(player, activeCardNumber);
                 } 
                 else

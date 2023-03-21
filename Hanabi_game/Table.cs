@@ -7,12 +7,13 @@ namespace Hanabi_game
 {
     class Table
     {
-        private List<Card> _cardOnTable = new List<Card>(25);
+        private static readonly int _tableCapacity = 25;
+        private List<Card> _cardOnTable = new List<Card>(_tableCapacity);
         private bool IsFullTable
         {
             get
             {
-                return _cardOnTable.Count == 25;
+                return _cardOnTable.Count == _tableCapacity;
             }
         }
         private Card _activeCard;
@@ -82,6 +83,10 @@ namespace Hanabi_game
                     Console.Write(_activeCard.FullCardValue);
                     _cardWasPlayed = true;
                     WinGameCheck();
+                    if (IsFullTable == true)
+                    {
+                        break;
+                    }
                 }
                 else
                 {
@@ -92,7 +97,7 @@ namespace Hanabi_game
                     _dropCardCounter++;
                     _cardWasPlayed = true;
                 }
-            } while (_cardWasPlayed == false || IsFullTable == true);
+            } while (_cardWasPlayed == false);
         }
 
         private (int, int) CardPlasePosition(Card playedCard)
@@ -148,6 +153,25 @@ namespace Hanabi_game
                 Console.Clear();
                 Console.SetCursorPosition(40, 9);
                 Console.Write("Вы победили!");
+            }
+        }
+
+        public bool GameOverCheck(Player player, Deck deck)
+        {
+            if (IsFullTable == false && deck.СardsInDeckCounter == 0 && player.cardsInHand.Count == 0)
+            {
+                Console.Clear();
+                Console.SetCursorPosition(40, 9);
+                Console.Write("Вы проиграли!");
+                return true;
+            }
+            else if (IsFullTable == true)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }
