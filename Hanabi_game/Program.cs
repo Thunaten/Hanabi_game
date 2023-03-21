@@ -16,9 +16,8 @@ namespace Hanabi_game
             Table table = new Table();
 
             player.StartPlay(deck);
-            for(int i = 0; i < deck.СardsInDeckCounter;)
+            while (table.GameOverCheck(player, deck) == false)
             {
-                //Console.ReadKey();
                 player.SelectAction(table, player, deck);
             }
             Console.ReadKey();
